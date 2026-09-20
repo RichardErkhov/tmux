@@ -290,6 +290,11 @@ server_loop(void)
 			return (0);
 	}
 
+	if (!RB_EMPTY(&sessions) &&
+	    (!options_get_number(global_options, "exit-empty") ||
+	    !options_get_number(global_options, "exit-unattached")))
+		return (0);
+
 	TAILQ_FOREACH(c, &clients, entry) {
 		if (c->session != NULL)
 			return (0);
